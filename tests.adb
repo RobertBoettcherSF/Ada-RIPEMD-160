@@ -24,8 +24,8 @@ procedure Tests is
       for I in Digest'Range loop
          High := Digest (I) / 16;
          Low  := Digest (I) mod 16;
-         Result (Natural (I) * 2 + 1) := Hex_Chars (Natural (High) + 1);
-         Result (Natural (I) * 2 + 2) := Hex_Chars (Natural (Low) + 1);
+         Result (I * 2 + 1) := Hex_Chars (Natural (High) + 1);
+         Result (I * 2 + 2) := Hex_Chars (Natural (Low) + 1);
       end loop;
       return Result;
    end To_Hex;
@@ -124,7 +124,7 @@ begin
 
    Put_Line ("TEST 6 — Block Size Multiples (64 Bytes)");
    declare
-      Str_64 : constant String (1 .. 64) := (others => 'x');
+      Str_64 : constant String (1 .. 64) := [others => 'x'];
       D1, D2, D3 : Digest_Type;
       Ctx : Context;
    begin
@@ -146,7 +146,7 @@ begin
 
    Put_Line ("TEST 7 — Block Size Multiples + 1 (65 Bytes)");
    declare
-      Str_65 : constant String (1 .. 65) := (others => 'y');
+      Str_65 : constant String (1 .. 65) := [others => 'y'];
       D1, D2 : Digest_Type;
       Ctx : Context;
    begin
@@ -167,7 +167,7 @@ begin
 
    Put_Line ("TEST 8 — Two Full Blocks (128 Bytes)");
    declare
-      Str_128 : constant String (1 .. 128) := (others => 'z');
+      Str_128 : constant String (1 .. 128) := [others => 'z'];
       D1, D2 : Digest_Type;
       Ctx : Context;
    begin
@@ -246,7 +246,7 @@ begin
    Put_Line ("TEST 11 — Array Slicing and Empty Bounds");
    declare
       Data       : constant Byte_Array (5 .. 10) := To_Bytes ("123456");
-      Empty_Data : constant Byte_Array (10 .. 9) := (others => 0);
+      Empty_Data : constant Byte_Array (10 .. 9) := [others => 0];
       D1, D2, D3 : Digest_Type;
       Ctx        : Context;
    begin
@@ -310,7 +310,7 @@ begin
    declare
       Ctx   : Context;
       D     : Digest_Type;
-      Chunk : constant Byte_Array (1 .. 1000) := (others => Character'Pos('a'));
+      Chunk : constant Byte_Array (1 .. 1000) := [others => Character'Pos('a')];
    begin
       Init (Ctx);
       for I in 1 .. 1000 loop
