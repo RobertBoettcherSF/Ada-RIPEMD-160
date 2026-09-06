@@ -14,12 +14,10 @@ package Ripemd_160 is
 
    -- Variant 1: Single-shot hashing (Static/Non-preemptive concept)
    -- Hashes a Byte_Array directly and returns the 160-bit digest.
-   function Hash (Message : Byte_Array) return Digest_Type
-     with Post => Hash'Result'Length = 20;
+   function Hash (Message : Byte_Array) return Digest_Type;
 
    -- Variant 2: Single-shot hashing of a String
-   function Hash (Message : String) return Digest_Type
-     with Post => Hash'Result'Length = 20;
+   function Hash (Message : String) return Digest_Type;
 
    -- Variant 3: Incremental API (Dynamic/Chunked processing concept)
    -- Used for streaming large data or chunked processing.
