@@ -90,16 +90,17 @@ begin
    declare
       Ctx : Context;
       D   : Digest_Type;
+      Msg : constant String := "message digest";
    begin
-      Check ("4.1 Single shot", To_Hex (Hash ("message digest")) = Md_Hash);
+      Check ("4.1 Single shot", To_Hex (Hash (Msg)) = Md_Hash);
       Init (Ctx);
       Update (Ctx, "message ");
       Update (Ctx, "digest");
       Finalize (Ctx, D);
       Check ("4.2 Word-by-word", To_Hex (D) = Md_Hash);
       Init (Ctx);
-      for I in 1 .. 14 loop
-         Update (Ctx, "message digest" (I .. I));
+      for I in Msg'Range loop
+         Update (Ctx, Msg (I .. I));
       end loop;
       Finalize (Ctx, D);
       Check ("4.3 Char-by-char", To_Hex (D) = Md_Hash);
@@ -212,7 +213,9 @@ begin
    begin
       Ex_Raised := False;
       begin
+         pragma Warnings (Off);
          Update (Ctx_Uninit, "fail");
+         pragma Warnings (On);
       exception
          when State_Error => Ex_Raised := True;
       end;
@@ -220,7 +223,9 @@ begin
 
       Ex_Raised := False;
       begin
+         pragma Warnings (Off);
          Update (Ctx_Uninit, To_Bytes ("fail"));
+         pragma Warnings (On);
       exception
          when State_Error => Ex_Raised := True;
       end;
@@ -228,7 +233,9 @@ begin
 
       Ex_Raised := False;
       begin
+         pragma Warnings (Off);
          Finalize (Ctx_Uninit, D_Dummy);
+         pragma Warnings (On);
       exception
          when State_Error => Ex_Raised := True;
       end;
